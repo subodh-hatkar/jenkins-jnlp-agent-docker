@@ -1,10 +1,7 @@
-FROM jenkins/inbound-agent:4.3-4-alpine as jnlp
+FROM subodhhatkar/jenkins-jnlp-agent-openjdk:latest
 
-FROM docker:19.03.11-git
-
-RUN apk -U add openjdk11 libcurl curl
-
-COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
-COPY --from=jnlp /usr/share/jenkins/agent.jar /usr/share/jenkins/agent.jar
-
-ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
+# Install Docker client
+ARG DOCKER_VERSION=19.03.9
+ARG DOCKER_COMPOSE_VERSION=1.26.2
+RUN curl -fsSL https://download.docker.com/linux/static/stable/`uname -m`/docker-$DOCKER_VERSION.tgz | tar --strip-components=1 -xz -C /usr/local/bin docker/docker
+RUN curl -fsSL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
