@@ -1,4 +1,4 @@
-FROM subodhhatkar/jenkins-jnlp-agent-openjdk:latest
+FROM subodhhatkar/jenkins-jnlp-agent-openjdk:11.0.7-jre-slim-buster
 
 # Install Docker client
 ARG DOCKER_VERSION=19.03.9
